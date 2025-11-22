@@ -16,8 +16,11 @@ Python).
 ## Launch the PyQt6 Learning Labs
 
 Interactive views for the practice problems are available via PyQt6:
-- Run `python launch_learning_labs.py` (installs PyQt6/pyqtgraph if missing), or
-  on macOS use `./launch.command`.
+- From the repo root run `python launch_learning_labs.py`. The script is
+  self-contained: it checks/installs PyQt6 and pyqtgraph, switches into the
+  project directory, and then launches `pyqt6_learning_labs.main`.
+- On macOS you can double-click or run `./launch.command`, which simply shells
+  out to the same Python launcher.
 - The app currently includes the Two Sum and Add Two Numbers exercises with
   helpers for visualizing inputs and outputs.
 
