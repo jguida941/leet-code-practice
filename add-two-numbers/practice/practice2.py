@@ -23,8 +23,8 @@ class Solution(object):
             v2 = l2.val if l2 else 0
 
             value = v1 + v2 + carry
-            carry = value % 10
-            value = carry // 10
+            carry = value // 10
+            value = carry % 10
 
 
             current_node.next = ListNode(value)
