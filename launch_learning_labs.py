@@ -35,19 +35,20 @@ def launch_app():
     script_dir = Path(__file__).parent
     os.chdir(script_dir)
 
-    print("\n" + "="*50)
-    print("Launching PyQt6 Learning Labs...")
-    print("="*50 + "\n")
+    print("\n" + "*"*50)
+    print("       Launching PyQt6 Learning Labs...")
+    print("*"*50 + "\n")
 
     # Run the main application
     subprocess.run([sys.executable, "-m", "pyqt6_learning_labs.main"])
 
 def main():
     print("""
-╔══════════════════════════════════════════════╗
-║     PyQt6 Learning Labs Auto Launcher        ║
-║   Interactive Algorithm Learning Platform    ║
-╚══════════════════════════════════════════════╝
+╔═══════════════════════════════════════════════╗
+║       PyQt6 Learning Labs Auto Launcher       ║
+║    Interactive Algorithm Learning Platform    ║
+║                     v2.0                      ║
+╚═══════════════════════════════════════════════╝
     """)
 
     # Check and install dependencies if needed
