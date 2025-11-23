@@ -1,36 +1,31 @@
-""""
-Problem
-- You are given two non-empty linked lists that represent two non-negative
-integers. The digits are stored in reverse order, and each node contains a
-single digit. Add the two numbers and return the sum as a linked list.
-"""
 class ListNode(object):
-    def __init__(self, val=0, next=None):
-        self.val = val
+    def __init__(self, value=0, next=None):
+        self.value = value
         self.next = next
 
-class Solution(object):
-    def addTwoNums(self, l1,l2):
 
-        dummy_node = ListNode(0)
-        current_node = dummy_node
+class Solution(object):
+    def addTwoNums(self, l1, l2):
+        dummy = ListNode()
+        current_node = dummy
         carry = 0
 
         while l1 or l2 or carry:
-            v1 = l1.val if l1 else 0
-            v2 = l2.val if l2 else 0
+            v1 = l1.value if l1 else 0
+            v2 = l2.value if l2 else 0
 
             total = v1 + v2 + carry
             carry = total // 10
-            digit = total % 10
+            val = total % 10
 
-            current_node.next = ListNode(digit)
-            current_node= current_node.next
+            current_node.next = ListNode(val)
+            current_node = current_node.next
 
             l1 = l1.next if l1 else None
             l2 = l2.next if l2 else None
 
-        return dummy_node.next
+        return dummy.next
+
 
 # --- helpers for testing and printing ---
 
@@ -49,7 +44,7 @@ def listnode_to_list(head):
     out = []
     cur = head
     while cur:
-        out.append(cur.val)
+        out.append(cur.value)
         cur = cur.next
     return out
 
@@ -66,8 +61,3 @@ if __name__ == "__main__":
 
     # Print as a Python list
     print("Result as list:", listnode_to_list(result))  # expect [7, 0, 8]
-
-
-
-
-
