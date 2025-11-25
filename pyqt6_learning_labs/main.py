@@ -482,6 +482,18 @@ class MainWindow(ResizableFramelessWindow):
         back_shortcut = QShortcut(QKeySequence(Shortcuts.STEP_BACK), self)
         back_shortcut.activated.connect(self._on_step_back)
 
+        # Tab switching shortcuts (Cmd+1 through Cmd+5)
+        for i in range(1, 6):
+            shortcut = QShortcut(QKeySequence(f"Ctrl+{i}"), self)
+            shortcut.activated.connect(lambda idx=i-1: self._switch_tab(idx))
+
+    def _switch_tab(self, index):
+        """Switch to tab at given index in current app."""
+        current = self.stack.currentWidget()
+        if hasattr(current, 'tabs'):
+            if index < current.tabs.count():
+                current.tabs.setCurrentIndex(index)
+
     def _get_current_playground(self):
         """Get the playground widget from current app if available."""
         current = self.stack.currentWidget()

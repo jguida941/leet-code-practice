@@ -369,11 +369,14 @@ class CodeEditor(QWidget):
                     event.ignore()
                     return True
 
-            is_shortcut = (event.modifiers() & Qt.KeyboardModifier.ControlModifier) and event.key() == Qt.Key.Key_Space
+            # Accept both Ctrl+Space (Windows/Linux) and Control+Space (Mac actual control key)
+            has_ctrl = event.modifiers() & Qt.KeyboardModifier.ControlModifier
+            has_meta = event.modifiers() & Qt.KeyboardModifier.MetaModifier
+            is_shortcut = (has_ctrl or has_meta) and event.key() == Qt.Key.Key_Space
             if not self.completer.popup().isVisible() and not is_shortcut:
                 return False
 
-            # Ctrl+Space to force complete
+            # Control+Space to force complete
             if is_shortcut:
                 self.check_completion()
                 return True

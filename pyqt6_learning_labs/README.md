@@ -34,15 +34,15 @@ An interactive algorithm learning platform built with PyQt6. Master data structu
 
 **Navigation**
 - `Escape` - Return to home screen
-- `Ctrl+1` through `Ctrl+5` - Switch between tabs
+- `Cmd+1` through `Cmd+5` - Switch between tabs (Mac)
 
 **Playground Controls**
-- `Ctrl+R` - Run trace (or run tests in Code Lab)
-- `Ctrl+Right` - Step forward in trace
-- `Ctrl+Left` - Step back in trace
+- `Cmd+R` - Run trace (or run tests in Code Lab)
+- `Cmd+Right` - Step forward in trace
+- `Cmd+Left` - Step back in trace
 
 **Code Editor**
-- `Ctrl+Space` - Trigger code completion
+- `Ctrl+Space` - Trigger code completion (Control key, not Cmd)
 
 ## Project Structure
 
