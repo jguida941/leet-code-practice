@@ -5,6 +5,8 @@ Each topic (binary search, graphs, trees, etc.) lives in its own directory, and
 inside each topic there is a small language-specific workspace (right now only
 Python).
 
+<img width="1191" height="793" alt="Screenshot 2025-11-25 at 1 30 54 AM" src="https://github.com/user-attachments/assets/1eca12bc-8cc7-4e70-ba36-8d074e89e178" />
+
 ## Quick start (CLI)
 
 1. (Optional) Activate a virtual environment: `source .venv/bin/activate` or
