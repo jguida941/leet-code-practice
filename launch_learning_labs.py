@@ -9,53 +9,76 @@ import os
 import subprocess
 from pathlib import Path
 
+
 def check_dependencies():
     """Check if required packages are installed"""
+    missing = []
+
     try:
         import PyQt6
-        print("✓ PyQt6 is installed")
+        print("  PyQt6 is installed")
     except ImportError:
-        print("✗ PyQt6 is not installed")
-        print("Installing PyQt6...")
-        subprocess.run([sys.executable, "-m", "pip", "install", "PyQt6>=6.4.0"])
+        print("  PyQt6 is not installed")
+        missing.append("PyQt6>=6.4.0")
 
     try:
         import pyqtgraph
-        print("✓ pyqtgraph is installed")
+        print("  pyqtgraph is installed")
     except ImportError:
-        print("✗ pyqtgraph is not installed (optional)")
-        print("Note: Installing pyqtgraph for better graph visualizations...")
-        try:
-            subprocess.run([sys.executable, "-m", "pip", "install", "pyqtgraph>=0.13.3"])
-        except:
-            print("Could not install pyqtgraph - app will use fallback graphs")
+        print("  pyqtgraph is not installed (optional, will use fallback)")
+
+    if missing:
+        print("\nInstalling missing dependencies...")
+        for package in missing:
+            try:
+                subprocess.run(
+                    [sys.executable, "-m", "pip", "install", package],
+                    check=True,
+                    capture_output=True
+                )
+                print(f"    Installed {package}")
+            except subprocess.CalledProcessError as e:
+                print(f"    Failed to install {package}: {e}")
+                return False
+
+    return True
+
 
 def launch_app():
     """Launch the PyQt6 Learning Labs application"""
     script_dir = Path(__file__).parent
     os.chdir(script_dir)
 
-    print("\n" + "*"*50)
+    print("\n" + "*" * 50)
     print("       Launching PyQt6 Learning Labs...")
-    print("*"*50 + "\n")
+    print("*" * 50 + "\n")
 
     # Run the main application
-    subprocess.run([sys.executable, "-m", "pyqt6_learning_labs.main"])
+    result = subprocess.run([sys.executable, "-m", "pyqt6_learning_labs.main"])
+    return result.returncode
+
 
 def main():
     print("""
-╔═══════════════════════════════════════════════╗
-║       PyQt6 Learning Labs Auto Launcher       ║
-║    Interactive Algorithm Learning Platform    ║
-║                     v2.0                      ║
-╚═══════════════════════════════════════════════╝
++-----------------------------------------------+
+|       PyQt6 Learning Labs Auto Launcher       |
+|    Interactive Algorithm Learning Platform    |
+|                     v2.1                      |
++-----------------------------------------------+
     """)
 
+    print("Checking dependencies...")
+
     # Check and install dependencies if needed
-    check_dependencies()
+    if not check_dependencies():
+        print("\nFailed to install required dependencies.")
+        print("Please install manually: pip install PyQt6>=6.4.0")
+        sys.exit(1)
 
     # Launch the application
-    launch_app()
+    exit_code = launch_app()
+    sys.exit(exit_code)
+
 
 if __name__ == "__main__":
     main()

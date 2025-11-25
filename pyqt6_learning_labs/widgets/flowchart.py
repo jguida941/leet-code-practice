@@ -4,10 +4,12 @@ from PyQt6.QtCore import Qt, QPointF
 from PyQt6.QtGui import QColor, QPen, QFont, QPainter, QPolygonF, QBrush
 from PyQt6.QtWidgets import QGraphicsRectItem, QGraphicsScene, QGraphicsView, QGraphicsItem, QWidget, QVBoxLayout, QHBoxLayout, QTextEdit, QLabel, QPushButton
 
+from pyqt6_learning_labs.core.constants import Colors, Dimensions
+
 class FlowchartNode(QGraphicsRectItem):
-    WIDTH = 240
-    HEIGHT = 90
-    
+    WIDTH = Dimensions.FLOWCHART_NODE_WIDTH
+    HEIGHT = Dimensions.FLOWCHART_NODE_HEIGHT
+
     def __init__(
         self,
         key: str,
@@ -24,31 +26,32 @@ class FlowchartNode(QGraphicsRectItem):
         self.detail = detail
         self.on_click = on_click
         self.is_selected = False
-        
+
         # Title text
         self.text_item = scene.addText(title)
-        self.text_item.setDefaultTextColor(QColor("#e5f4ff"))
+        self.text_item.setDefaultTextColor(QColor(Colors.TEXT_PRIMARY))
         self.text_item.setFont(QFont("Roboto", 10, QFont.Weight.Bold))
         self.text_item.setPos(x + 15, y + 15)
         self.text_item.setZValue(1)
-        
+
         scene.addItem(self)
         self.setZValue(0)
         self.x_pos = x
         self.y_pos = y
+        self.setAcceptHoverEvents(True)
 
     def paint(self, painter: QPainter, option, widget=None):
         # Custom paint for rounded corners and gradients
         rect = self.rect()
-        
+
         # Gradient Background
         if self.is_selected:
             gradient = QColor("#00c2a8")
-            border_color = QColor("#00ffae")
-            border_width = 2
+            border_color = QColor(Colors.ACCENT_SECONDARY)
+            border_width = 3
         else:
             gradient = QColor("#1b2735")
-            border_color = QColor("#462d7c")
+            border_color = QColor(Colors.ACCENT_TERTIARY)
             border_width = 1
 
         painter.setBrush(gradient)

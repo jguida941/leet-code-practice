@@ -1,3 +1,7 @@
+"""
+Configuration for Add Two Numbers problem including flowchart, test cases, and template code.
+"""
+
 FLOWCHART_NODES = {
     "start": (
         "Start + dummy",
@@ -54,11 +58,30 @@ FLOWCHART_EDGES = [
     ("advance", "done"),
 ]
 
+# Extended test cases covering edge cases
 TEST_CASES = [
-    ([2, 4, 3], [5, 6, 4], [7, 0, 8]),
-    ([0], [0], [0]),
-    ([9, 9, 9, 9], [9, 9, 9, 9], [8, 9, 9, 9, 1]),
-    ([5], [5], [0, 1]),
+    # Basic cases (numbers in reverse order)
+    ([2, 4, 3], [5, 6, 4], [7, 0, 8]),  # 342 + 465 = 807
+    ([0], [0], [0]),  # 0 + 0 = 0
+
+    # Carry propagation
+    ([9, 9, 9, 9], [9, 9, 9, 9], [8, 9, 9, 9, 1]),  # 9999 + 9999 = 19998
+    ([5], [5], [0, 1]),  # 5 + 5 = 10
+
+    # Different length lists
+    ([1, 2, 3], [4, 5], [5, 7, 3]),  # 321 + 54 = 375
+    ([9, 9], [1], [0, 0, 1]),  # 99 + 1 = 100
+    ([1], [9, 9, 9, 9], [0, 0, 0, 0, 1]),  # 1 + 9999 = 10000
+
+    # Single digit results
+    ([1], [2], [3]),  # 1 + 2 = 3
+    ([0], [5], [5]),  # 0 + 5 = 5
+
+    # Large numbers
+    ([9, 9, 9, 9, 9, 9, 9], [9, 9, 9, 9], [8, 9, 9, 9, 0, 0, 0, 1]),
+
+    # Zero edge cases
+    ([0, 0, 1], [0, 0, 2], [0, 0, 3]),  # 100 + 200 = 300
 ]
 
 TEMPLATE_CODE = '''class ListNode:

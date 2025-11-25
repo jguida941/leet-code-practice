@@ -3,6 +3,8 @@ from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QSlider, QFrame
 from PyQt6.QtCore import Qt, QRect
 from PyQt6.QtGui import QPainter, QPen, QColor, QFont
 
+from pyqt6_learning_labs.core.constants import Colors
+
 try:
     import pyqtgraph as pg
     HAS_PYQTGRAPH = True

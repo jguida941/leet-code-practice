@@ -1,3 +1,7 @@
+"""
+Configuration for Two Sum problem including flowchart, test cases, and template code.
+"""
+
 FLOWCHART_NODES = {
     "start": (
         "Start + init seen{}",
@@ -46,11 +50,29 @@ FLOWCHART_EDGES = [
     ("store", "loop"),
 ]
 
+# Extended test cases covering edge cases
 TEST_CASES = [
+    # Basic cases
     ([2, 7, 11, 15], 9, [0, 1]),
     ([3, 3], 6, [0, 1]),
     ([3, 2, 4], 6, [1, 2]),
     ([1, 2, 3, 4, 5, 6], 11, [4, 5]),
+
+    # Edge cases
+    ([0, 4, 3, 0], 0, [0, 3]),  # Zero sum
+    ([-1, -2, -3, -4, -5], -8, [2, 4]),  # Negative numbers
+    ([1, 5, 5, 3], 10, [1, 2]),  # Duplicate values
+
+    # Larger inputs
+    ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 19, [8, 9]),
+    ([100, 200, 300, 400, 500], 900, [3, 4]),
+
+    # Two element arrays
+    ([1, 4], 5, [0, 1]),
+    ([-3, 3], 0, [0, 1]),
+
+    # No solution case (should return empty)
+    ([1, 2, 3], 100, []),
 ]
 
 TEMPLATE_CODE = '''def two_sum(nums, target):
