@@ -164,6 +164,30 @@ class CodeEditor(QWidget):
         self.completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         self.completer.activated.connect(self.insert_completion)
 
+        # Style the completion popup for visibility
+        self.completer.popup().setStyleSheet(f"""
+            QListView {{
+                background-color: {Colors.BG_DARK};
+                color: {Colors.TEXT_PRIMARY};
+                border: 2px solid {Colors.ACCENT_PRIMARY};
+                border-radius: 6px;
+                padding: 4px;
+                font-size: 14px;
+                font-family: 'Courier New', monospace;
+            }}
+            QListView::item {{
+                padding: 6px 12px;
+                border-radius: 4px;
+            }}
+            QListView::item:selected {{
+                background-color: {Colors.ACCENT_PRIMARY};
+                color: {Colors.BG_DARK};
+            }}
+            QListView::item:hover {{
+                background-color: {Colors.BG_CARD_HOVER};
+            }}
+        """)
+
         # Install event filter for completer
         self.editor.installEventFilter(self)
 
@@ -354,8 +378,21 @@ class CodeEditor(QWidget):
         if len(completion_prefix) < 1:
             return
 
-        if completion_prefix != self.completer.completionPrefix():
-            self.completer.setCompletionPrefix(completion_prefix)
+        self._show_completion(completion_prefix)
+
+    def force_completion(self):
+        """Force show completion popup (for manual trigger via shortcut)."""
+        if self.completer.popup().isVisible():
+            self.completer.popup().hide()
+            return
+
+        completion_prefix = self.text_under_cursor()
+        self._show_completion(completion_prefix)
+
+    def _show_completion(self, prefix):
+        """Show the completion popup with given prefix."""
+        if prefix != self.completer.completionPrefix():
+            self.completer.setCompletionPrefix(prefix)
             self.completer.popup().setCurrentIndex(self.completer.completionModel().index(0, 0))
 
         cr = self.editor.cursorRect()
@@ -369,16 +406,15 @@ class CodeEditor(QWidget):
                     event.ignore()
                     return True
 
-            # Accept both Ctrl+Space (Windows/Linux) and Control+Space (Mac actual control key)
-            has_ctrl = event.modifiers() & Qt.KeyboardModifier.ControlModifier
-            has_meta = event.modifiers() & Qt.KeyboardModifier.MetaModifier
-            is_shortcut = (has_ctrl or has_meta) and event.key() == Qt.Key.Key_Space
+            # Cmd+E for code completion
+            has_cmd = event.modifiers() & Qt.KeyboardModifier.ControlModifier
+            is_shortcut = has_cmd and event.key() == Qt.Key.Key_E
             if not self.completer.popup().isVisible() and not is_shortcut:
                 return False
 
-            # Control+Space to force complete
+            # Cmd+E to force complete
             if is_shortcut:
-                self.check_completion()
+                self.force_completion()
                 return True
 
         return super().eventFilter(obj, event)

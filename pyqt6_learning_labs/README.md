@@ -42,7 +42,7 @@ An interactive algorithm learning platform built with PyQt6. Master data structu
 - `Cmd+Left` - Step back in trace
 
 **Code Editor**
-- `Ctrl+Space` - Trigger code completion (Control key, not Cmd)
+- `Cmd+E` - Trigger code completion
 
 ## Project Structure
 

@@ -468,24 +468,24 @@ class TwoSumWidget(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
 
-        tabs = QTabWidget()
+        self.tabs = QTabWidget()
 
         # Lesson Tab
         lesson_path = get_lessons_dir() / "two-sum" / "python" / "lesson" / "two-sum-lesson.md"
-        tabs.addTab(LessonWidget(lesson_path, "Two Sum Lesson"), "Lesson")
+        self.tabs.addTab(LessonWidget(lesson_path, "Two Sum Lesson"), "Lesson")
 
         # Create flowchart first so we can pass it to playground
         self.flowchart = FlowchartWidget(FLOWCHART_NODES, FLOWCHART_EDGES)
 
         # Playground Tab with flowchart sync
         self.playground = StepByStepPlayground(self.flowchart)
-        tabs.addTab(self.playground, "Playground")
+        self.tabs.addTab(self.playground, "Playground")
 
         # Flowchart Tab
-        tabs.addTab(self.flowchart, "Flowchart")
+        self.tabs.addTab(self.flowchart, "Flowchart")
 
         # Complexity Tab
-        tabs.addTab(
+        self.tabs.addTab(
             ComplexityWidget(
                 "Time Complexity: O(n)",
                 "Input Size (n)",
@@ -496,11 +496,6 @@ class TwoSumWidget(QWidget):
         )
 
         # Code Lab Tab
-        tabs.addTab(TwoSumCodeLab(), "Code Lab")
+        self.tabs.addTab(TwoSumCodeLab(), "Code Lab")
 
-        layout.addWidget(tabs)
-
-        # Setup tab shortcuts
-        for i in range(min(5, tabs.count())):
-            shortcut = QShortcut(QKeySequence(f"Ctrl+{i+1}"), self)
-            shortcut.activated.connect(lambda idx=i: tabs.setCurrentIndex(idx))
+        layout.addWidget(self.tabs)

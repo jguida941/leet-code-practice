@@ -483,9 +483,11 @@ class MainWindow(ResizableFramelessWindow):
         back_shortcut.activated.connect(self._on_step_back)
 
         # Tab switching shortcuts (Cmd+1 through Cmd+5)
+        self._tab_shortcuts = []
         for i in range(1, 6):
             shortcut = QShortcut(QKeySequence(f"Ctrl+{i}"), self)
             shortcut.activated.connect(lambda idx=i-1: self._switch_tab(idx))
+            self._tab_shortcuts.append(shortcut)
 
     def _switch_tab(self, index):
         """Switch to tab at given index in current app."""
